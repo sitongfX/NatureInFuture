@@ -4,6 +4,15 @@
 **********************************************************************/
 #include <ESP32Servo.h>
 #define ADC_Max 4095    // This is the default ADC max value on the ESP32 (12 bit ADC width); 
+#include <WiFi.h>
+#include <HTTPClient.h>
+#define USE_SERIAL Serial
+
+const char *ssid_Router     = "Galaxy A32 5G7E97"; //Enter the router name
+const char *password_Router = "9498356672"; //Enter the router password
+
+
+String address= "http://134.122.113.13/tz2486/running";
 
 /*SERVO*/
 Servo myservo;
@@ -29,49 +38,70 @@ void setup() {
     pinMode(outPorts[i], OUTPUT);
   }
 
+    WiFi.begin(ssid_Router, password_Router);
+    USE_SERIAL.println(String("Connecting to ")+ssid_Router);
+    while (WiFi.status() != WL_CONNECTED){
+      delay(500);
+      USE_SERIAL.print(".");
+    }
+    USE_SERIAL.println("\nConnected, IP address: ");
+    USE_SERIAL.println(WiFi.localIP());
+    USE_SERIAL.println("Setup End");
+
+
 }
 
 void loop() {
-   long rand;
-   rand = random(1, 4);  // returns a value 1, 2, 3
-   switch (rand) {
-      case 1:
-         moveAround(true, 3, 3);
-         servoSweep();
-         break;
 
-     case 2:
-         moveAround(false, 2, 3);
-         servoSweep();
-         break;
+  if((WiFi.status() == WL_CONNECTED)) {
+    HTTPClient http;
+    http.begin(address);
+    int httpCode = http.GET(); // start connection and send HTTP header
+    if (httpCode == HTTP_CODE_OK) { 
+        String response = http.getString();
+        if (response.equals("false")) {
+            // Do not run sculpture, perhaps sleep for a couple seconds
+        }
+        else if(response.equals("true")) {
+            // Run sculpture
+  
+         long rand;
+         rand = random(1, 4);  // returns a value 1, 2, 3
+         switch (rand) {
+            case 1:
+               moveAround(true, 3, 3);
+               servoSweep();
+               break;
+      
+           case 2:
+               moveAround(false, 2, 3);
+               servoSweep();
+               break;
+      
+           case 3:
+               moveAround(true, 2, 3);
+               servoSweep();
+               servoSweep();
+               servoSweep();
+               break;
+      
+            default:
+               moveAround(false, 1, 3);
+               moveAround(true, 1, 3);
+       
+               break;
+         }
 
-     case 3:
-         moveAround(true, 2, 3);
-         servoSweep();
-         servoSweep();
-         servoSweep();
-         break;
-
-      default:
-         moveAround(false, 1, 3);
-         moveAround(true, 1, 3);
- 
-         break;
    }
+        USE_SERIAL.println("Response was: " + response);
+    } else {
+        USE_SERIAL.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    }
+    http.end();
+    delay(500); // sleep for half of a second
+  } 
 
   
-//    delay(2000);
-//    moveAround(true, 3, 3);
-//    servoSweep();
-//    moveAround(false, 2, 3);
-//    servoSweep();
-//    moveAround(true, 2, 3);
-//    servoSweep();
-//    servoSweep();
-//    servoSweep();
-//    moveAround(false, 1, 3);
-//    moveAround(true, 3, 3);
-//    moveAround(false, 5, 3);
 
 }
 

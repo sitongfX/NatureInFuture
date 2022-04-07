@@ -14,3 +14,8 @@ by hannah z.
 <img alt="1" src="https://user-images.githubusercontent.com/83347817/162109072-b0a5e182-c9e4-4afb-ac77-9d338a592992.png" width="350" height="250" />
 
 a video capturing the demo in action can be watched [on Youtube](https://youtu.be/iIokxq5maFs) and a detailed documentation can be found [here](https://hannahz.vercel.app/copycat-embedded-system).
+
+### The Frog and Lilypad
+by akira h.
+
+A detailed view can be found [here](https://akihigaki.github.io/kinetic-sculpture.github.io/)

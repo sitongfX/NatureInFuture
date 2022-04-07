@@ -26,3 +26,8 @@ by changsu n.
 
 ![IMG_0881 HEIC](https://user-images.githubusercontent.com/25335750/162141755-1e061e1a-a6d8-4678-9bb6-76b2c3578b75.jpg)
 Blogpost on the installation can be found at: https://changsunam.github.io/Kinetic_Sculptures_NatureInFuture/
+
+### The Butterfly and her robotic friend
+by Sitong F.
+
+Video can be found [here](https://youtu.be/0pLXryBh-gg).

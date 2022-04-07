@@ -30,4 +30,5 @@ Blogpost on the installation can be found at: https://changsunam.github.io/Kinet
 ### The Butterfly and her robotic friend
 by Sitong F.
 
+![butterfly](butterfly.jpg)
 Video can be found [here](https://youtu.be/0pLXryBh-gg).

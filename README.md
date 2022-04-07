@@ -1,5 +1,12 @@
 # NatureInFuture
 
+## Background
+This is a kinetic sculpture multiples composed of four distinct pieces. Under the same umbrella theme/setting that future robots will be used to replace the role of creatures that go endangered or extinct, we each give our own interpretation and tried to represent some core movements in animals of our choice.
+
+## Reproduce the work?
+We each used 2 motors: One 28BYJ-48 Step Motor, and one MG90S Tower Pro MicroServo. (8 motors in total.)
+The codes of each sculpture can be found in different folders. 
+To reproduce the work, you might want to delete or tweak the part of codes that handle WiFi information as well as API command.
 
 ### The Spider
 by hannah z.

@@ -4,15 +4,6 @@
 **********************************************************************/
 #include <ESP32Servo.h>
 #define ADC_Max 4095    // This is the default ADC max value on the ESP32 (12 bit ADC width); 
-#include <WiFi.h>
-#include <HTTPClient.h>
-#define USE_SERIAL Serial
-
-const char *ssid_Router     = "Galaxy A32 5G7E97"; //Enter the router name
-const char *password_Router = "9498356672"; //Enter the router password
-
-
-String address= "http://134.122.113.13/tz2486/running";
 
 /*SERVO*/
 Servo myservo;
@@ -25,7 +16,8 @@ int potenVal;
 int outPorts[] = {14, 27, 26, 25}; //stepper motor port
 
 void setup() {
-  
+
+  randomSeed(analogRead(0));
   /*SERVO*/
   myservo.setPeriodHertz(50);           // standard 50 hz servo
   myservo.attach(servoPin, 500, 2500);  // attaches the servo on servoPin to the servo object
@@ -37,74 +29,66 @@ void setup() {
     pinMode(outPorts[i], OUTPUT);
   }
 
-  WiFi.begin(ssid_Router, password_Router);
-  USE_SERIAL.println(String("Connecting to ")+ssid_Router);
-  while (WiFi.status() != WL_CONNECTED){
-    delay(500);
-    USE_SERIAL.print(".");
-  }
-  USE_SERIAL.println("\nConnected, IP address: ");
-  USE_SERIAL.println(WiFi.localIP());
-  USE_SERIAL.println("Setup End");
-
 }
 
 void loop() {
+   long rand;
+   rand = random(1, 4);  // returns a value 1, 2, 3
+   switch (rand) {
+      case 1:
+         moveAround(true, 3, 3);
+         servoSweep();
+         break;
 
-  if((WiFi.status() == WL_CONNECTED)) {
-    HTTPClient http;
-    http.begin(address);
+     case 2:
+         moveAround(false, 2, 3);
+         servoSweep();
+         break;
+
+     case 3:
+         moveAround(true, 2, 3);
+         servoSweep();
+         servoSweep();
+         servoSweep();
+         break;
+
+      default:
+         moveAround(false, 1, 3);
+         moveAround(true, 1, 3);
  
-    int httpCode = http.GET(); // start connection and send HTTP header
-    if (httpCode == HTTP_CODE_OK) { 
-        String response = http.getString();
-        if (response.equals("false")) {
-            // Do not run sculpture, perhaps sleep for a couple seconds
-        }
-        else if(response.equals("true")) {
-            // Run sculpture
+         break;
+   }
 
-
-
-         //stepper motor move for a full cycle before servo moves 10°
-          moveAround(true, 6, 3);
-          delay(200);
-          moveAround(false, 2, 3);
-          delay(100);
-          servoSweep();
-          delay(100);
-          moveAround(false, 2, 3);
-          delay(100);
-          servoSweep();
-          delay(100);
-          moveAround(false, 2, 3);
-          delay(100);
-          servoSweep();
-          delay(100);
-          moveAround(true, 6, 3);
-          delay(200);
-
-            
-        }
-        USE_SERIAL.println("Response was: " + response);
-    } else {
-        USE_SERIAL.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-    }
-    http.end();
-    delay(500); // sleep for half of a second
-  } 
-
-
+  
+//    delay(2000);
+//    moveAround(true, 3, 3);
+//    servoSweep();
+//    moveAround(false, 2, 3);
+//    servoSweep();
+//    moveAround(true, 2, 3);
+//    servoSweep();
+//    servoSweep();
+//    servoSweep();
+//    moveAround(false, 1, 3);
+//    moveAround(true, 3, 3);
+//    moveAround(false, 5, 3);
 
 }
 
   /*SERVO FUNCTION*/
  void servoSweep() {
-    for (int p = 0; p <= 60; p += 1) { 
-          myservo.write(posVal + p);       // tell servo to go to position in variable 'pos'
-          delay(25);                  
+    if (posVal < 180){
+      for (int p = 0; p <= 60; p += 1) { 
+            myservo.write(posVal + p);       // tell servo to go to position in variable 'pos'
+            delay(25);                  
+      }
+      posVal += 60;
     }
-    posVal += 60;
+    else{
+      posVal = 0;
+      delay(200);
+    }
+    
   }
 
   /*STEPPER FUNCTIONS*/

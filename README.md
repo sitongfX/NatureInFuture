@@ -19,3 +19,10 @@ a video capturing the demo in action can be watched [on Youtube](https://youtu.b
 by akira h.
 
 A detailed view can be found [here](https://akihigaki.github.io/kinetic-sculpture.github.io/)
+
+
+### The fish
+by ChangSu N.
+
+![IMG_0881 HEIC](https://user-images.githubusercontent.com/25335750/162141755-1e061e1a-a6d8-4678-9bb6-76b2c3578b75.jpg)
+Blogpost on the installation can be found at: https://changsunam.github.io/Kinetic_Sculptures_NatureInFuture/
